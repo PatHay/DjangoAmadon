@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Amadon</title>
+    {% load static %}
+    <!-- The line above tells Django to be ready to listen for static files -->
+    <!-- <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}" media="screen" title="no title"  charset="utf-8"> -->
+    <!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder -->
+    <style>
+        #box {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+
+        #survey {
+            text-align: left;
+            display: inline-block;
+            background-color: white;
+            width: 30%;
+            border: 5px solid white;
+            padding: 5%;
+        }
+
+        table {
+            width: 100%;
+            padding: 2%;
+        }
+
+        .description {
+            width: 50%;
+            text-align: left;
+        }
+
+        .price {
+            width: 8%;
+        }
+
+        .head {
+            background-color: grey;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <h1>Amadon Store!</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th class="description, head">Item</th>
+                    <th class="price, head">Price</th>
+                    <th class="head">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in items %}
+                <tr>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.price }}</td>
+                    <td>
+                        <form action="/purchase/{{ item.id }}" method="POST">
+                            {% csrf_token %}
+                            <select name='quantity'>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                            <button type="submit">Buy!</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>

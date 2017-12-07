@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Amadon Checkout</title>
+    {% load static %}
+    <!-- The line above tells Django to be ready to listen for static files -->
+    <!-- <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}" media="screen" title="no title"  charset="utf-8"> -->
+    <!-- Put the static files in the static folder inside your app.  Django collects files within all static folders and puts them within a single folder -->
+    <style>
+        #box {
+            height: 100%;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">
+        <h1>Thank you for your business!</h1>
+        {% if request.session.last_transaction %}
+        <h3>We charged your credit card for ${{ request.session.last_transaction }}</h3>
+        {% else %}
+        <h3>SPEND MORE MONEY</h3>
+        {% endif %}
+        <p>You have ordered {{ request.session.total_items }} item(s) so far and spent 
+            ${{ request.session.total_charged }} with Amadon.com!
+        </p>
+        <a href = "http://localhost:8000/">Go Back</a>
+    </div>
+</body>
+
+</html>
